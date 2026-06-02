@@ -1,33 +1,54 @@
-/* ================= MOBILE MENU ================= */
+/* ========================================
+   MOBILE NAVIGATION
+======================================== */
 
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 
-menuToggle.addEventListener("click", () => {
-  navLinks.classList.toggle("active");
-});
+if (menuToggle && navLinks) {
 
-/* ================= CLOSE MENU ON CLICK ================= */
-
-document.querySelectorAll(".nav-links a").forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("active");
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
   });
-});
 
-/* ================= SCROLL ANIMATIONS ================= */
+  document.querySelectorAll(".nav-links a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("active");
+    });
+  });
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
+}
+
+/* ========================================
+   SCROLL REVEAL ANIMATION
+======================================== */
+
+const animatedElements = document.querySelectorAll(
+  ".domain-card, .project-card, .tech-item"
+);
+
+const revealObserver = new IntersectionObserver(
+  (entries, observer) => {
+
+    entries.forEach((entry) => {
+
+      if (!entry.isIntersecting) return;
+
       entry.target.classList.add("show");
-    }
-  });
-}, {
-  threshold: 0.1
-});
 
-document.querySelectorAll(".domain-card, .project-card, .tech-item").forEach((el) => {
-  el.classList.add("hidden");
-  observer.observe(el);
+      // Stop observing after animation
+      observer.unobserve(entry.target);
+
+    });
+
+  },
+  {
+    threshold: 0.15,
+    rootMargin: "0px 0px -50px 0px"
+  }
+);
+
+animatedElements.forEach((element) => {
+  element.classList.add("hidden");
+  revealObserver.observe(element);
 });
