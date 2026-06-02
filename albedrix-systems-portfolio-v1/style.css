@@ -440,3 +440,16 @@ footer {
     padding: 35px;
   }
 }
+
+footer{
+
+  padding:45px;
+
+  border-top:
+  1px solid rgba(255,255,255,.08);
+
+  color:#8d95a3;
+
+  background:
+  rgba(255,255,255,.01);
+}
